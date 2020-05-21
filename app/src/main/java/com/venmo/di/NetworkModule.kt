@@ -2,11 +2,14 @@ package com.venmo.di
 
 import com.github.aurae.retrofit2.LoganSquareConverterFactory
 import com.venmo.common.adapters.LiveDataCallAdapterFactory
-import com.venmo.home.BuildConfig
+import com.venmo.home.api.ISearchApi
+import com.venmo.home.api.ISearchService
+import com.venmo.home.api.SearchServiceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import kotlinx.coroutines.runBlocking
+import kotterknife.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,50 +27,20 @@ import javax.inject.Singleton
 // Safe here as we are dealing with a Dagger 2 module
 class NetworkModule {
 
-    /**
-     * Provides the Registration service implementation.
-     * @param retrofit the Retrofit object used to instantiate the service
-     * @return the Post service implementation.
-     */
-//    @Provides
-//    @Reusable
-//    internal fun provideRegistrationApi(retrofit: Retrofit): IRegistrationApi {
-//        return retrofit.create(IRegistrationApi::class.java)
-//    }
-
-//    /**
-//     * Provides the Registration service implementation.
-//     * @param retrofit the Retrofit object used to instantiate the service
-//     * @return the Post service implementation.
-//     */
-//    @Provides
-//    @Reusable
-//    internal fun providesUserApi(retrofit: Retrofit): IUserApi {
-//        return retrofit.create(IUserApi::class.java)
-//    }
 
 
-//    /**
-//     * Provides the Post service implementation.
-//     * @param retrofit the Retrofit object used to instantiate the service
-//     * @return the Post service implementation.
-//     */
-//    @Provides
-//    internal fun provideRegistrationService(registationService: RegistrationServiceImpl): IRegistrationService {
-//        return registationService
-//    }
+    @Provides
+    @Reusable
+    internal fun providesSearchApi(retrofit: Retrofit): ISearchApi {
+        return retrofit.create(ISearchApi::class.java)
+    }
 
-//
-//    /**
-//     * Provides the User service implementation.
-//     * @param retrofit the Retrofit object used to instantiate the service
-//     * @return the Post service implementation.
-//     */
-//    @Provides
-//    internal fun provideUserService(userService: UserServiceImpl): IUserService {
-//        return userService
-//    }
 
+
+    @Provides
+    internal fun provideSearchService(searchServiceImpl: SearchServiceImpl): ISearchService {
+        return searchServiceImpl
+    }
 
     @Singleton
     @Provides
@@ -109,7 +82,7 @@ class NetworkModule {
 
 
     companion object {
-        const val BASE_URL: String = "https://qa-api.romio.com"
+        const val BASE_URL: String = "https://itunes.apple.com"
     }
 
 

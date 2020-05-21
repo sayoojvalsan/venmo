@@ -1,36 +1,59 @@
 package com.venmo.home.ui
 
 import androidx.lifecycle.*
-import com.venmo.common.model.Resource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.venmo.common.model.*
+import com.venmo.home.model.ITunesSearchResponse
+import com.venmo.home.api.SearchRepository
+import com.venmo.home.model.AlbumArtWork
+import java.util.*
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val searchRepository: SearchRepository
+) : ViewModel() {
 
-    private val _userID: MutableLiveData<String> = MutableLiveData()
-
-//    val user: LiveData<Resource<UserData>> = Transformations
-//        .switchMap(_userID) { userID ->
-//            if (userID == null) {
-//                AbsentLiveData.create()
-//            } else {
-//                userRepository.getUserData(userID)
-//            }
-//        }
+    private lateinit var country: String
+    private val query = MutableLiveData<String>()
+//    private val nextPageHandler = NextPageHandler(searchRepository)
 
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    fun setQuery(originalInput: String, country: String) {
+        val input = originalInput.toLowerCase(Locale.getDefault()).trim()
+        if (input == query.value) {
+            return
+        }
+        this.country = country
+        query.value = input
     }
-    val text: LiveData<String> = _text
 
 
-//
-//    init {
-//        viewModelScope.launch(Dispatchers.IO){
-//            val userId = sessionRepo.getUserSession()?.userId
-//            _userID.postValue(userId)
-//        }
-//    }
+    private val rawResults: LiveData<ApiResponse<ITunesSearchResponse>> = Transformations
+        .switchMap(query) { search ->
+            if (search.isNullOrBlank()) {
+                AbsentLiveData.create()
+            } else {
+                searchRepository.search(search, country)
+            }
+        }
+
+    val albumArtWorkSearchResults:LiveData<List<AlbumArtWork>> = Transformations
+        .map(rawResults){
+            when(it){
+                is ApiSuccessResponse->{
+                    it.body.toAlbumArtWork()
+                }
+                is ApiEmptyResponse -> emptyList()
+                is ApiErrorResponse -> emptyList()
+            }
+        }
+
+
+
+}
+
+private fun ITunesSearchResponse.toAlbumArtWork(): List<AlbumArtWork>?{
+   return this.results?.map {
+        AlbumArtWork(it.artistName, it.trackName,it.collectionName )
+    }
+
 }
