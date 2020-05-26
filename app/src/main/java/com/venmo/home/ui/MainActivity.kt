@@ -35,10 +35,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home_search,
-            R.id.navigation_home_network,
-            R.id.navigation_home_jobs,
-            R.id.navigation_home_earnings
+            R.id.navigation_home_search
         ),drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

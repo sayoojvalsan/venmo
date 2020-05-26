@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/navigation_home_search"
-        android:icon="@drawable/home_search"
-        android:title="@string/title_search_home" />
-
-    <item
-        android:id="@+id/navigation_home_network"
-        android:icon="@drawable/ic_home_network"
-        android:title="@string/title_network" />
-
-    <item
-        android:id="@+id/navigation_home_jobs"
-        android:icon="@drawable/ic_home_jobs"
-        android:title="@string/title_jobs" />
-
-    <item
-        android:id="@+id/navigation_home_earnings"
-        android:icon="@drawable/ic_home_earnings"
-        android:title="@string/title_earnings" />
 
 </menu>

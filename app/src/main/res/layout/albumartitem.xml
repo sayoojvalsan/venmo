@@ -5,10 +5,11 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/imgView_icon"
-        android:layout_width="wrap_content"
-        android:padding="3dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/albumArtThumbNail"
+        android:layout_width="100dp"
+        android:padding="16dp"
+        android:scaleType="centerCrop"
+        android:layout_height="100dp"
         android:src="@drawable/ic_launcher_background" />
 
     <LinearLayout

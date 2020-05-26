@@ -2,27 +2,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
     app:startDestination="@id/navigation_home_search">
 
     <fragment
         android:id="@+id/navigation_home_search"
         android:name="com.venmo.home.ui.HomeFragment"
-        android:label="@string/title_search_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+
+        <action
+            android:id="@+id/action_navigation_home_search_to_albumDetailsFragment"
+            app:destination="@id/albumDetailsFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/navigation_home_earnings"
-        android:name="com.venmo.home.ui.EarningsFragment"
-        android:label="@string/title_earnings"
-        tools:layout="@layout/fragment_navigation_earnings" />
-    <fragment
-        android:id="@+id/navigation_home_network"
-        android:name="com.venmo.home.ui.NetworkFragment"
-        android:label="@string/title_network"
-        tools:layout="@layout/fragment_network" />
-    <fragment
-        android:id="@+id/navigation_home_jobs"
-        android:name="com.venmo.home.ui.JobFragment"
-        android:label="@string/title_jobs"
-        tools:layout="@layout/fragment_job" />
+        android:id="@+id/albumDetailsFragment"
+        android:name="com.venmo.home.AlbumDetailsFragment"
+        android:label="fragment_album_details"
+        tools:layout="@layout/fragment_album_details" >
+        <argument
+            android:name="albumArtWork"
+            app:argType="com.venmo.home.model.AlbumArtWork" />
+    </fragment>
 </navigation>

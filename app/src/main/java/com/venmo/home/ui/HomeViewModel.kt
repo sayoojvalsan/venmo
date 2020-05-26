@@ -1,10 +1,10 @@
 package com.venmo.home.ui
 
 import androidx.lifecycle.*
-import com.venmo.common.model.*
 import com.venmo.home.model.ITunesSearchResponse
 import com.venmo.home.api.SearchRepository
 import com.venmo.home.model.AlbumArtWork
+import kotlinx.coroutines.Dispatchers
 import java.util.*
 import javax.inject.Inject
 
@@ -26,34 +26,26 @@ class HomeViewModel @Inject constructor(
         query.value = input
     }
 
-
-    private val rawResults: LiveData<ApiResponse<ITunesSearchResponse>> = Transformations
-        .switchMap(query) { search ->
-            if (search.isNullOrBlank()) {
-                AbsentLiveData.create()
+    val results : LiveData<List<AlbumArtWork>>  = query.switchMap { query ->
+        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+            val searchResponse = searchRepository.search(searchText = query, country = country)
+            if (searchResponse.isSuccessful) {
+                emit(searchResponse.body()!!.toAlbumArtWork())
             } else {
-                searchRepository.search(search, country)
+                emit(emptyList<AlbumArtWork>())
             }
         }
-
-    val albumArtWorkSearchResults:LiveData<List<AlbumArtWork>> = Transformations
-        .map(rawResults){
-            when(it){
-                is ApiSuccessResponse->{
-                    it.body.toAlbumArtWork()
-                }
-                is ApiEmptyResponse -> emptyList()
-                is ApiErrorResponse -> emptyList()
-            }
-        }
+    }
 
 
-
+private fun ITunesSearchResponse.toAlbumArtWork(): List<AlbumArtWork> {
+    return if (this.results != null) this.results.map {
+        AlbumArtWork(it.artistName, it.trackName, it.collectionName, it.artworkUrl100)
+    }
+    else {
+        emptyList()
+    }
 }
 
-private fun ITunesSearchResponse.toAlbumArtWork(): List<AlbumArtWork>?{
-   return this.results?.map {
-        AlbumArtWork(it.artistName, it.trackName,it.collectionName )
-    }
 
 }

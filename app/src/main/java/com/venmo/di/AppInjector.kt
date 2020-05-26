@@ -16,7 +16,7 @@ import dagger.android.support.HasSupportFragmentInjector
  */
 object AppInjector {
 
-    fun init(application: RomioApplication) {
+    fun init(application: VenmoApplication) {
         DaggerApplicationComponent.builder().application(application)
             .build().inject(application)
 

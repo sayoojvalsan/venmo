@@ -4,39 +4,6 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_invite_friends"
-            android:title="@string/side_nav_invite_friends" />
-        <item
-            android:id="@+id/nav_recommend_services"
-            android:title="@string/side_nav_invite_recommend_services" />
-        <item
-            android:id="@+id/nav_manage_services"
-            android:title="@string/side_nav_manage_services" />
 
-        <item
-            android:id="@+id/nav_become_expert"
-            android:title="@string/side_nav_become_expert" />
-
-
-        <item
-            android:id="@+id/nav_payment_setting"
-            android:title="@string/side_nav_payment_setting" />
-
-        <item
-            android:id="@+id/nav_settings"
-            android:title="@string/side_nav_settings" />
-
-        <item
-            android:id="@+id/nav_promos"
-            android:title="@string/side_nav_promos" />
-
-        <item
-            android:id="@+id/nav_support"
-            android:title="@string/side_nav_support" />
-
-        <item
-            android:id="@+id/nav_logout"
-            android:title="@string/side_nav_logout" />
     </group>
 </menu>

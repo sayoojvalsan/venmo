@@ -21,7 +21,7 @@ import javax.inject.Singleton
     MainActivityModule::class])
 interface ApplicationComponent {
 
-    fun inject(application: RomioApplication)
+    fun inject(application: VenmoApplication)
 
     @Component.Builder
     interface Builder {
@@ -34,7 +34,7 @@ interface ApplicationComponent {
 
 }
 
-class RomioApplication: Application(), HasActivityInjector {
+class VenmoApplication: Application(), HasActivityInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>

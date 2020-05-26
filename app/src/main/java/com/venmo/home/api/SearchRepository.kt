@@ -1,15 +1,21 @@
 package com.venmo.home.api
 
-import androidx.lifecycle.LiveData
-import com.venmo.common.model.ApiResponse
 import com.venmo.home.model.ITunesSearchResponse
+import retrofit2.Response
 import javax.inject.Inject
 
 class SearchRepository @Inject constructor(private val searchService: ISearchService) {
 
-      suspend fun search(searchText: String, country: String): LiveData<ApiResponse<ITunesSearchResponse>> {
-         return searchService.userData(searchText, country)
-    }
+       suspend fun search(searchText: String, country: String): Response<ITunesSearchResponse> {
+           return searchService.userData(searchText, country)
+//           return if (userDataResponse.code() == 200) {
+//               userDataResponse.body()
+//           }
+//           else{
+//               null
+//           }
+
+       }
 
 
 }
