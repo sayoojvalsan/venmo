@@ -40,6 +40,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src/main/res', 'src/test/resources/mockito-extensions'
+            }
+        }
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -62,8 +69,6 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:${versions.appcompat}"
     implementation "androidx.recyclerview:recyclerview:${versions.recyclerview}"
-    implementation "io.reactivex.rxjava2:rxkotlin:${versions.rx}"
-    implementation "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}"
     implementation "com.jakewharton:kotterknife:${versions.kotterknife}"
     implementation "com.jakewharton.timber:timber:${versions.timber}"
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
@@ -108,16 +113,10 @@ dependencies {
     implementation 'com.github.aurae.retrofit2:converter-logansquare:1.4.1'
 
 
-    implementation 'androidx.room:room-runtime:2.1.0-alpha06'
-    kapt 'androidx.room:room-compiler:2.1.0-alpha06'
-    implementation 'androidx.room:room-ktx:2.1.0-alpha06'
-
-
     // Dynamic Feature Module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:${versions.nav_version}"
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:${versions.nav_version}"
-    kapt "android.arch.persistence.room:compiler:1.1.1"
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'

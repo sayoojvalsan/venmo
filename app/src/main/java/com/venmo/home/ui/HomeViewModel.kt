@@ -14,7 +14,6 @@ class HomeViewModel @Inject constructor(
 
     private lateinit var country: String
     private val query = MutableLiveData<String>()
-//    private val nextPageHandler = NextPageHandler(searchRepository)
 
 
     fun setQuery(originalInput: String, country: String) {
@@ -46,6 +45,5 @@ private fun ITunesSearchResponse.toAlbumArtWork(): List<AlbumArtWork> {
         emptyList()
     }
 }
-
 
 }

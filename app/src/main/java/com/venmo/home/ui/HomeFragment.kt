@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.venmo.di.Injectable
@@ -18,24 +17,22 @@ import com.venmo.di.injectActivityViewModel
 import com.venmo.home.R
 import com.venmo.home.model.AlbumArtWork
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
-import timber.log.Timber
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-
 class HomeFragment : Fragment(), Injectable {
-    private val queryChannel = BroadcastChannel<String>(Channel.CONFLATED)
 
     private lateinit var albumArtRecyclerViewAdapter: AlbumArtRecyclerViewAdapter
     private lateinit var homeViewModel: HomeViewModel
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var flow: Flow<String>
 
 
     override fun onCreateView(
@@ -56,7 +53,6 @@ class HomeFragment : Fragment(), Injectable {
         initSearch()
 
         homeViewModel.results.observe(viewLifecycleOwner, Observer {
-            Timber.d("Got results $it")
             albumArtRecyclerViewAdapter.albumArtList = it
             albumArtRecyclerViewAdapter.notifyDataSetChanged()
         })
@@ -83,8 +79,7 @@ class HomeFragment : Fragment(), Injectable {
                 delay(300)  //debounce timeOut
                 if (searchText != searchFor)
                     return@launch
-                Timber.d(("Sending query $searchText"))
-                homeViewModel.setQuery(searchText, "US")
+                homeViewModel.setQuery(searchText, getString(R.string.country))
             }
         }
 

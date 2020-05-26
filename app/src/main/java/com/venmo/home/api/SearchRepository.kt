@@ -8,14 +8,5 @@ class SearchRepository @Inject constructor(private val searchService: ISearchSer
 
        suspend fun search(searchText: String, country: String): Response<ITunesSearchResponse> {
            return searchService.userData(searchText, country)
-//           return if (userDataResponse.code() == 200) {
-//               userDataResponse.body()
-//           }
-//           else{
-//               null
-//           }
-
        }
-
-
 }
