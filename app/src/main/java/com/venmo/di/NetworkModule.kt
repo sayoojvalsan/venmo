@@ -1,7 +1,6 @@
 package com.venmo.di
 
 import com.github.aurae.retrofit2.LoganSquareConverterFactory
-import com.venmo.common.adapters.LiveDataCallAdapterFactory
 import com.venmo.home.BuildConfig
 import com.venmo.home.api.ISearchApi
 import com.venmo.home.api.ISearchService
@@ -54,16 +53,13 @@ class NetworkModule {
         }
 
         okHttpBuilder.addInterceptor { chain ->
-            Timber.d("Inside interceptor")
             val original: Request = chain.request()
             val request: Request.Builder = original.newBuilder()
             runBlocking {
                 request.apply {
-                    Timber.d(" interceptor inside apply headers")
                     this.addHeader("Content-Type", "application/json")
                 }.build()
             }
-            Timber.d(" interceptor done")
             chain.proceed(request.build())
         }
         val client: OkHttpClient = okHttpBuilder.build()
@@ -72,8 +68,6 @@ class NetworkModule {
             .baseUrl(BASE_URL)
                 .addConverterFactory(LoganSquareConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(LiveDataCallAdapterFactory())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)
             .build()
     }

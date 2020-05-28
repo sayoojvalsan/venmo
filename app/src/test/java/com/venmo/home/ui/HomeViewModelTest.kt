@@ -52,7 +52,7 @@ class HomeViewModelTest {
         homeViewModel.results.observeForever{observer}
 
         //Mock the service
-        whenever(searchRepo.search(any(), any(), query.startPosition)).then {
+        whenever(searchRepo.search(any(), any(), any())).then {
             Response.success(createResponse())
         }
         whenever(response.isSuccessful).then {
@@ -70,8 +70,8 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun getResults()  = runBlockingTest{
-        homeViewModel.setQuery("Beetles", "US")
+    fun veryCorrectResultResponse()  = runBlockingTest{
+        homeViewModel.setQuery("Beetles", "US", 0)
 
         homeViewModel.results.getOrAwaitValue()
         assertEquals(homeViewModel.results.getOrAwaitValue().size, 1)
