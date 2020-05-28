@@ -2,6 +2,7 @@ package com.venmo.di
 
 import com.github.aurae.retrofit2.LoganSquareConverterFactory
 import com.venmo.common.adapters.LiveDataCallAdapterFactory
+import com.venmo.home.BuildConfig
 import com.venmo.home.api.ISearchApi
 import com.venmo.home.api.ISearchService
 import com.venmo.home.api.SearchServiceImpl
@@ -9,7 +10,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import kotlinx.coroutines.runBlocking
-import kotterknife.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor

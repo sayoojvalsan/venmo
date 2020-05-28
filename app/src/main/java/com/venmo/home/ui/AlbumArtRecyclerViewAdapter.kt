@@ -5,16 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.venmo.home.R
 import com.venmo.home.model.AlbumArtWork
-import kotlinx.android.synthetic.main.fragment_album_details.*
+import com.venmo.utils.AlbumArtDiffUtils
 
 
 class AlbumArtRecyclerViewAdapter(var onItemClick: (AlbumArtWork) -> Unit) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var albumArtList: List<AlbumArtWork> = emptyList()
+    ListAdapter<AlbumArtWork, RecyclerView.ViewHolder>(AlbumArtDiffUtils()) {
 
     override fun onCreateViewHolder(
          parent: ViewGroup,
@@ -29,24 +29,21 @@ class AlbumArtRecyclerViewAdapter(var onItemClick: (AlbumArtWork) -> Unit) :
         position: Int
     ) {
         val albumArtWork: AlbumArtWork =
-            albumArtList[position]
+            getItem(position)
         val viewHolder =
             holder as RecyclerViewViewHolder
-        viewHolder.txtView_title.text = albumArtWork.albumTitle
-        viewHolder.txtView_description.text = albumArtWork.artistName
+        viewHolder.txtView_title.text = "${albumArtWork.trackName}"
+        viewHolder.txtView_description.text = "${albumArtWork.albumTitle} -  ${albumArtWork.artistName}"
         Glide.with(viewHolder.albumArtThumbnail.context).load(albumArtWork.imageUrl).into(viewHolder.albumArtThumbnail)
 
     }
 
-    override fun getItemCount(): Int {
-        return albumArtList.size
-    }
 
     internal inner class RecyclerViewViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         init{
             itemView.setOnClickListener {
-                onItemClick.invoke(albumArtList[adapterPosition])
+                onItemClick.invoke(getItem(adapterPosition))
             }
         }
         var albumArtThumbnail: ImageView = itemView.findViewById(R.id.albumArtThumbNail)

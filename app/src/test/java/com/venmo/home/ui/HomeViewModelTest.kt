@@ -18,8 +18,6 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
 import org.mockito.MockitoAnnotations
 import retrofit2.Response
 import java.util.concurrent.CountDownLatch
@@ -54,7 +52,7 @@ class HomeViewModelTest {
         homeViewModel.results.observeForever{observer}
 
         //Mock the service
-        whenever(searchRepo.search(any(), any())).then {
+        whenever(searchRepo.search(any(), any(), query.startPosition)).then {
             Response.success(createResponse())
         }
         whenever(response.isSuccessful).then {

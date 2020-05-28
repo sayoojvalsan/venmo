@@ -6,7 +6,11 @@ import javax.inject.Inject
 
 class SearchRepository @Inject constructor(private val searchService: ISearchService) {
 
-       suspend fun search(searchText: String, country: String): Response<ITunesSearchResponse> {
-           return searchService.userData(searchText, country)
+       suspend fun search(
+           searchText: String,
+           country: String,
+           startPosition: Int
+       ): Response<ITunesSearchResponse> {
+           return searchService.userData(searchText, country, startPosition)
        }
 }

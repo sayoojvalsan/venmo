@@ -8,6 +8,11 @@ import retrofit2.http.Query
 interface ISearchApi {
 
     @GET("search")
-    suspend fun userProfile( @Query("term") text: String, @Query("country") country: String) : Response<ITunesSearchResponse>
+    suspend fun userProfile(
+        @Query("term") text: String,
+        @Query("country") country: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ) : Response<ITunesSearchResponse>
 
 }
